@@ -73,7 +73,7 @@ class AuthController extends Controller
      */
     public function register(Request $request)
     {
-        // Validate input
+        // Validasi input
         $validated = $request->validate([
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
@@ -88,25 +88,28 @@ class AuthController extends Controller
             'password.required' => 'Password wajib diisi',
             'password.confirmed' => 'Konfirmasi password tidak cocok',
             'password.min' => 'Password minimal 8 karakter',
-            'role.in' => 'Role tidak valid',
             'terms.accepted' => 'Anda harus menyetujui syarat dan ketentuan',
         ]);
 
-        // Create user
+        // Tentukan role default jika tidak dikirim dari form
+        $role = $validated['role'] ?? 'student';
+
+        // Buat user baru
         $user = User::create([
-            'id' => Uuid::uuid4(),
+            'id' => Uuid::uuid4()->toString(), // UUID valid
             'name' => $validated['name'],
             'email' => $validated['email'],
             'password' => Hash::make($validated['password']),
+            'role' => $role,
         ]);
 
-        // Login the user
+        // Login otomatis
         Auth::login($user);
 
-        // Regenerate session
+        // Regenerasi session
         $request->session()->regenerate();
 
-        // Redirect based on role with success message
+        // Redirect sesuai role + pesan sukses
         return $this->redirectBasedOnRole()->with('success', 'Registrasi berhasil! Selamat datang di Silab.');
     }
 
@@ -124,11 +127,16 @@ class AuthController extends Controller
     }
 
     /**
-     * Redirect user based on their role
+     * Redirect user berdasarkan role
      */
     private function redirectBasedOnRole()
     {
         $user = Auth::user();
+
+        // Jika user tidak punya role atau belum login (edge case)
+        if (!$user || !$user->role) {
+            return redirect()->route('home');
+        }
 
         switch ($user->role) {
             case 'admin':
