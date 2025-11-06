@@ -39,7 +39,7 @@
                                  : 'text-gray-700 hover:text-blue-600' }}">
                         Dashboard
                     </a>
-                    <a href="#" {{-- TODO: Ganti ke route peminjaman --}}
+                    <a href="{{ route('admin.peminjaman') }}" 
                        class="font-medium text-gray-700 hover:text-blue-600 transition">
                         Peminjaman
                     </a>
