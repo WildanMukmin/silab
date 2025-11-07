@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!DOCTYPE html> 
 <html lang="id">
 <head>
     <meta charset="UTF-8">
@@ -70,76 +70,110 @@
 
         <!-- Status Cards -->
         <div class="grid grid-cols-4 gap-4 mb-8">
-            <div class="bg-yellow-400 text-white rounded-xl p-4 flex justify-between items-center shadow-md">
+            <a href="{{ route('admin.peminjaman', ['status' => 'menunggu']) }}" 
+            class="bg-yellow-400 text-white rounded-xl p-4 flex justify-between items-center shadow-md {{ request('status') == 'menunggu' ? 'ring-4 ring-yellow-200' : '' }}">
                 <div>
                     <p class="text-lg font-semibold">Menunggu</p>
                     <h2 class="text-3xl font-bold">{{ $menunggu ?? 0 }}</h2>
                 </div>
                 <i class="fas fa-hourglass-half text-3xl"></i>
-            </div>
+            </a>
 
-            <div class="bg-green-500 text-white rounded-xl p-4 flex justify-between items-center shadow-md">
+            <a href="{{ route('admin.peminjaman', ['status' => 'disetujui']) }}" 
+            class="bg-green-500 text-white rounded-xl p-4 flex justify-between items-center shadow-md {{ request('status') == 'disetujui' ? 'ring-4 ring-green-200' : '' }}">
                 <div>
                     <p class="text-lg font-semibold">Disetujui</p>
                     <h2 class="text-3xl font-bold">{{ $disetujui ?? 0 }}</h2>
                 </div>
                 <i class="fas fa-check-circle text-3xl"></i>
-            </div>
+            </a>
 
-            <div class="bg-blue-500 text-white rounded-xl p-4 flex justify-between items-center shadow-md">
+            <a href="{{ route('admin.peminjaman', ['status' => 'selesai']) }}" 
+            class="bg-blue-500 text-white rounded-xl p-4 flex justify-between items-center shadow-md {{ request('status') == 'selesai' ? 'ring-4 ring-blue-200' : '' }}">
                 <div>
                     <p class="text-lg font-semibold">Selesai</p>
                     <h2 class="text-3xl font-bold">{{ $selesai ?? 0 }}</h2>
                 </div>
                 <i class="fas fa-check text-3xl"></i>
-            </div>
+            </a>
 
-            <div class="bg-red-500 text-white rounded-xl p-4 flex justify-between items-center shadow-md">
+            <a href="{{ route('admin.peminjaman', ['status' => 'ditolak']) }}" 
+            class="bg-red-500 text-white rounded-xl p-4 flex justify-between items-center shadow-md {{ request('status') == 'ditolak' ? 'ring-4 ring-red-200' : '' }}">
                 <div>
                     <p class="text-lg font-semibold">Ditolak</p>
                     <h2 class="text-3xl font-bold">{{ $ditolak ?? 0 }}</h2>
                 </div>
                 <i class="fas fa-times-circle text-3xl"></i>
-            </div>
+            </a>
         </div>
 
-        <!-- Filter & Search -->
+
+       <!-- Filter & Search -->
         <div class="flex justify-between items-center mb-6">
-            <div class="flex space-x-3">
-                <input type="text" placeholder="Cari peminjaman..." class="px-4 py-2 border rounded-lg w-64">
-                <select class="px-4 py-2 border rounded-lg">
-                    <option>Semua Status</option>
-                    <option>Menunggu</option>
-                    <option>Disetujui</option>
-                    <option>Selesai</option>
-                    <option>Ditolak</option>
+            <form method="GET" action="{{ route('admin.peminjaman') }}" class="flex space-x-3 items-center">
+                <!-- Input Pencarian -->
+                <input 
+                    type="text" 
+                    name="search" 
+                    value="{{ request('search') }}" 
+                    placeholder="Cari peminjam..." 
+                    class="px-4 py-2 border rounded-lg w-64 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    oninput="this.form.submit()"
+                >
+
+                <!-- Dropdown Status -->
+                <select 
+                    name="status" 
+                    onchange="this.form.submit()" 
+                    class="px-4 py-2 border rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-blue-500"
+                >
+                    <option value="semua" {{ $status == 'semua' ? 'selected' : '' }}>Semua Status</option>
+                    <option value="menunggu" {{ $status == 'menunggu' ? 'selected' : '' }}>Menunggu</option>
+                    <option value="disetujui" {{ $status == 'disetujui' ? 'selected' : '' }}>Disetujui</option>
+                    <option value="selesai" {{ $status == 'selesai' ? 'selected' : '' }}>Selesai</option>
+                    <option value="ditolak" {{ $status == 'ditolak' ? 'selected' : '' }}>Ditolak</option>
                 </select>
+            </form>
+
+            <!-- Tombol Export -->
+            <div>
+                <form action="{{ route('admin.peminjaman.export') }}" method="GET">
+                    <button type="submit" 
+                        class="bg-blue-600 text-white px-4 py-2 rounded-lg flex items-center space-x-2 hover:bg-blue-700 transition">
+                        <i class="fas fa-file-export"></i>
+                        <span>Export Data</span>
+                    </button>
+                </form>
+            </div>
             </div>
 
-            <div class="flex space-x-3">
-                <button class="bg-blue-600 text-white px-4 py-2 rounded-lg flex items-center space-x-2">
-                    <i class="fas fa-file-export"></i>
-                    <span>Export Data</span>
-                </button>
-                <!-- <button class="bg-gray-200 text-gray-700 px-4 py-2 rounded-lg flex items-center space-x-2">
-                    <i class="fas fa-cog"></i>
-                    <span>Pengaturan</span>
-                </button> -->
-            </div>
-        </div>
 
         <!-- Daftar Peminjaman -->
         <div class="space-y-4">
             @foreach($peminjaman as $item)
                 <div class="bg-white rounded-xl shadow-sm p-5 card-hover">
-                    <div class="flex justify-between">
+                    <div class="flex justify-between items-start">
                         <div>
                             <h2 class="font-semibold text-lg text-gray-800">{{ $item->user->name }}</h2>
                             <p class="text-sm text-gray-500">{{ $item->user->nim ?? '-' }} • {{ $item->user->prodi ?? '-' }}</p>
+
                             <h3 class="font-semibold mt-2 text-gray-700">{{ $item->alat->nama_alat }}</h3>
-                            <p class="text-sm text-gray-500">{{ $item->tujuan_penggunaan }}</p>
+                            <p class="text-sm text-gray-500 mt-1">
+                                <span class="font-semibold">Tujuan:</span> {{ $item->tujuan_penggunaan ?? '-' }}
+                            </p>
+                            @if(!empty($item->catatan_tambahan))
+                                <p class="text-sm text-gray-500 mt-1">
+                                    <span class="font-semibold">Catatan Tambahan:</span> {{ $item->catatan_tambahan }}
+                                </p>
+                            @endif
+                            @if($item->status == 'ditolak' && !empty($item->alasan_penolakan))
+                                <p class="text-sm text-red-600 mt-1">
+                                    <span class="font-semibold">Alasan Penolakan:</span> {{ $item->alasan_penolakan }}
+                                </p>
+                            @endif
                         </div>
-                        <div>
+
+                        <div class="flex items-center space-x-3">
                             <span class="px-3 py-1 text-sm font-medium rounded-full 
                                 @if($item->status == 'menunggu') bg-yellow-100 text-yellow-700
                                 @elseif($item->status == 'disetujui') bg-green-100 text-green-700
@@ -147,13 +181,24 @@
                                 @else bg-red-100 text-red-700 @endif">
                                 {{ ucfirst($item->status) }}
                             </span>
+
+                            <a href="{{ route('admin.peminjaman.show', $item->id) }}" 
+                               class="text-blue-600 hover:text-blue-800" title="Lihat Detail">
+                                <i class="fas fa-eye text-lg"></i>
+                            </a>
                         </div>
                     </div>
 
                     <div class="mt-3 text-gray-500 text-sm flex items-center space-x-4">
-                        <div><i class="fa-regular fa-calendar"></i> {{ $item->tanggal_peminjaman }}</div>
-                        <div><i class="fa-regular fa-clock"></i> {{ $item->waktu_mulai }} - {{ $item->waktu_selesai }}</div>
-                        <div><i class="fa-solid fa-location-dot"></i> {{ $item->lokasi_peminjaman ?? '-' }}</div>
+                       <div>
+                            <i class="fa-regular fa-calendar"></i>
+                            {{ \Carbon\Carbon::parse($item->tanggal_peminjaman)->translatedFormat('d F Y') }}
+                        </div>
+                        <div>
+                            <i class="fa-regular fa-clock"></i>
+                            {{ \Carbon\Carbon::parse($item->waktu_mulai)->format('H:i') }} - 
+                            {{ \Carbon\Carbon::parse($item->waktu_selesai)->format('H:i') }}
+                        </div>
                     </div>
                 </div>
             @endforeach

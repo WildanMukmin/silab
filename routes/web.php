@@ -33,12 +33,17 @@ Route::middleware('auth')->group(function () {
     Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
     // Admin Routes
-    Route::middleware('role:admin')->prefix('admin')->name('admin.')->group(function () {
-        Route::get('/dashboard', [DashboardController::class, 'adminDashboard'])->name('dashboard');   
-        Route::resource('alat', AlatController::class);
-        Route::get('/peminjaman', [AdminPeminjamanController::class, 'index'])->name('peminjaman');
-        Route::post('/peminjaman/{id}/update-status', [AdminPeminjamanController::class, 'updateStatus'])->name('peminjaman.updateStatus');
-    });
+Route::middleware('role:admin')->prefix('admin')->name('admin.')->group(function () {
+    Route::get('/dashboard', [DashboardController::class, 'adminDashboard'])->name('dashboard');
+    Route::resource('alat', AlatController::class);
+    Route::get('/peminjaman', [AdminPeminjamanController::class, 'index'])->name('peminjaman');
+    Route::get('/peminjaman/export', [AdminPeminjamanController::class, 'export'])->name('peminjaman.export');
+    Route::get('/peminjaman/{id}', [AdminPeminjamanController::class, 'show'])->name('peminjaman.show');
+    Route::post('/peminjaman/{id}/verifikasi/{status}', [AdminPeminjamanController::class, 'verifikasi'])->name('peminjaman.verifikasi');
+    Route::post('/peminjaman/{id}/update-status', [AdminPeminjamanController::class, 'updateStatus'])->name('peminjaman.updateStatus');
+    Route::delete('/peminjaman/{id}', [AdminPeminjamanController::class, 'destroy'])->name('peminjaman.destroy');
+});
+
 
     // Student Routes
     Route::middleware('role:student')->prefix('student')->name('student.')->group(function () {
