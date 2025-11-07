@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Student Dashboard - Silab</title>
+    <title>Dashboard User - Silab</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <style>
@@ -16,101 +16,194 @@
             transform: translateY(-5px);
             box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
         }
-
-        .progress-bar {
-            transition: width 0.5s ease;
-        }
     </style>
 </head>
 
 <body class="bg-gray-100">
-    <div class="flex h-screen">
-        <!-- Sidebar -->
-        <aside class="w-64 bg-green-800 text-white">
-            <div class="p-6">
-                <div class="flex items-center mb-8">
-                    <i class="fas fa-graduation-cap text-3xl"></i>
-                    <span class="ml-2 text-2xl font-bold">Silab</span>
+
+    <nav class="bg-white shadow-md sticky top-0 z-50">
+        <div class="px-8">
+            <div class="flex justify-between h-16 items-center">
+                
+                <div class="flex items-center space-x-2">
+                    <div class="w-10 h-10 bg-blue-600 rounded-lg flex items-center justify-center">
+                        <i class="fas fa-flask text-white"></i>
+                    </div>
+                    <span class="text-xl font-bold text-gray-800 uppercase">Silab</span>
                 </div>
 
-                <nav class="space-y-2">
+                <div class="hidden md:flex space-x-8">
                     <a href="{{ route('student.dashboard') }}"
-                        class="flex items-center px-4 py-3 bg-green-900 rounded-lg">
-                        <i class="fas fa-home mr-3"></i>
+                       class="font-medium transition 
+                              {{ request()->routeIs('student.dashboard') 
+                                 ? 'text-blue-600 border-b-2 border-blue-600' 
+                                 : 'text-gray-700 hover:text-blue-600' }}">
                         Dashboard
                     </a>
-                    <a href="#" class="flex items-center px-4 py-3 hover:bg-green-700 rounded-lg transition">
-                        <i class="fas fa-book-open mr-3"></i>
-                        Kursus Saya
+                    <a href="{{ route('student.peminjaman') }}" 
+                       class="font-medium transition 
+                              {{ request()->routeIs('student.peminjaman*') 
+                                 ? 'text-blue-600 border-b-2 border-blue-600' 
+                                 : 'text-gray-700 hover:text-blue-600' }}">
+                        Peminjaman
                     </a>
-                    <a href="#" class="flex items-center px-4 py-3 hover:bg-green-700 rounded-lg transition">
-                        <i class="fas fa-search mr-3"></i>
-                        Cari Kursus
+                    <a href="{{ route('student.alat.index') }}"
+                       class="font-medium transition 
+                              {{ request()->routeIs('student.alat*') 
+                                 ? 'text-blue-600 border-b-2 border-blue-600' 
+                                 : 'text-gray-700 hover:text-blue-600' }}">
+                        Alat
                     </a>
-                    <a href="#" class="flex items-center px-4 py-3 hover:bg-green-700 rounded-lg transition">
-                        <i class="fas fa-certificate mr-3"></i>
-                        Sertifikat
+                </div>
+
+                <div class="flex items-center space-x-4">
+                    <div class="flex items-center space-x-2">
+                        <div class="w-8 h-8 bg-blue-600 rounded-full flex items-center justify-center">
+                            <i class="fas fa-user text-white text-sm"></i>
+                        </div>
+                        <span class="text-gray-700 font-medium">{{ Auth::user()->name }}</span>
+                    </div>
+                    <span class="text-gray-300">|</span>
+                    <form method="POST" action="{{ route('logout') }}">
+                        @csrf
+                        <button type="submit"
+                            class="text-gray-500 hover:text-red-600 transition"
+                            title="Logout">
+                            <i class="fas fa-sign-out-alt text-lg"></i>
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <main class="flex-1">
+        <div class="p-8">
+            <!-- Header Section -->
+            <div class="mb-8">
+                <h1 class="text-3xl font-bold text-gray-800 mb-2">Dashboard Student</h1>
+                <p class="text-gray-600">Kelola peminjaman alat laboratorium Anda</p>
+            </div>
+
+            <!-- Summary Cards Section -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+                    <!-- Total Peminjaman Card -->
+                    <div class="bg-white rounded-xl shadow-sm p-6 card-hover">
+                        <div class="flex items-center">
+                            <div class="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center mr-4">
+                                <i class="fas fa-calendar text-blue-600 text-xl"></i>
+                            </div>
+                            <div>
+                                <p class="text-sm text-gray-600 mb-1">Total Peminjaman</p>
+                                <p class="text-3xl font-bold text-gray-800">{{ $totalPeminjaman ?? 0 }}</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Disetujui Card -->
+                    <div class="bg-white rounded-xl shadow-sm p-6 card-hover">
+                        <div class="flex items-center">
+                            <div class="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center mr-4">
+                                <i class="fas fa-check text-green-600 text-xl"></i>
+                            </div>
+                            <div>
+                                <p class="text-sm text-gray-600 mb-1">Disetujui</p>
+                                <p class="text-3xl font-bold text-gray-800">{{ $disetujui ?? 0 }}</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Menunggu Card -->
+                    <div class="bg-white rounded-xl shadow-sm p-6 card-hover">
+                        <div class="flex items-center">
+                            <div class="w-12 h-12 bg-yellow-100 rounded-lg flex items-center justify-center mr-4">
+                                <i class="fas fa-clock text-yellow-600 text-xl"></i>
+                            </div>
+                            <div>
+                                <p class="text-sm text-gray-600 mb-1">Menunggu</p>
+                                <p class="text-3xl font-bold text-gray-800">{{ $menunggu ?? 0 }}</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Ditolak Card -->
+                    <div class="bg-white rounded-xl shadow-sm p-6 card-hover">
+                        <div class="flex items-center">
+                            <div class="w-12 h-12 bg-red-100 rounded-lg flex items-center justify-center mr-4">
+                                <i class="fas fa-times text-red-600 text-xl"></i>
+                            </div>
+                            <div>
+                                <p class="text-sm text-gray-600 mb-1">Ditolak</p>
+                                <p class="text-3xl font-bold text-gray-800">{{ $ditolak ?? 0 }}</p>
+                            </div>
+                        </div>
+                    </div>
+            </div>
+
+            <!-- Navigation Tabs Section -->
+            <div class="mb-6 border-b border-gray-200">
+                <nav class="flex space-x-8">
+                    <a href="#" class="pb-4 px-1 border-b-2 border-blue-600 font-semibold text-blue-600">
+                        Ringkasan
                     </a>
-                    {{-- <a href="#" class="flex items-center px-4 py-3 hover:bg-green-700 rounded-lg transition">
-                        <i class="fas fa-chart-line mr-3"></i>
-                        Progress
-                    </a> --}}
-                    {{-- <a href="#" class="flex items-center px-4 py-3 hover:bg-green-700 rounded-lg transition">
-                        <i class="fas fa-user mr-3"></i>
-                        Profil
-                    </a> --}}
+                    <a href="{{ route('student.peminjaman', ['tab' => 'riwayat']) }}" class="pb-4 px-1 text-gray-600 hover:text-gray-800 transition">
+                        Riwayat Peminjaman
+                    </a>
                 </nav>
             </div>
 
-            <!-- User Info -->
-            <div class="absolute bottom-0 w-64 p-6 border-t border-green-700">
-                <div class="flex items-center">
-                    <div class="w-10 h-10 bg-green-600 rounded-full flex items-center justify-center">
-                        <i class="fas fa-user-graduate"></i>
+            <!-- Recent Loans Section -->
+            <div class="bg-white rounded-xl shadow-sm p-6">
+                <h2 class="text-xl font-bold text-gray-800 mb-6">Peminjaman Terbaru</h2>
+                
+                @if(isset($recentLoans) && $recentLoans->count() > 0)
+                    <div class="space-y-4">
+                        @foreach($recentLoans as $loan)
+                            <div class="flex items-center justify-between p-4 bg-gray-50 rounded-lg hover:bg-gray-100 transition">
+                                <div class="flex items-center space-x-4">
+                                    <div class="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center">
+                                        <i class="fas fa-flask text-blue-600 text-xl"></i>
+                                    </div>
+                                    <div>
+                                        <h3 class="font-semibold text-gray-800">{{ $loan->alat->nama_alat ?? 'Alat tidak ditemukan' }}</h3>
+                                        <p class="text-sm text-gray-600">
+                                            {{ \Carbon\Carbon::parse($loan->tanggal_peminjaman)->format('Y-m-d') }} • 
+                                            {{ date('H:i', strtotime($loan->waktu_mulai)) }} - 
+                                            {{ date('H:i', strtotime($loan->waktu_selesai)) }}
+                                        </p>
+                                    </div>
+                                </div>
+                                <div>
+                                    @if($loan->status == 'disetujui')
+                                        <span class="px-3 py-1 bg-green-100 text-green-700 rounded-lg text-sm font-medium">
+                                            Disetujui
+                                        </span>
+                                    @elseif($loan->status == 'menunggu')
+                                        <span class="px-3 py-1 bg-yellow-100 text-yellow-700 rounded-lg text-sm font-medium">
+                                            Menunggu
+                                        </span>
+                                    @elseif($loan->status == 'ditolak')
+                                        <span class="px-3 py-1 bg-red-100 text-red-700 rounded-lg text-sm font-medium">
+                                            Ditolak
+                                        </span>
+                                    @elseif($loan->status == 'selesai')
+                                        <span class="px-3 py-1 bg-gray-100 text-gray-700 rounded-lg text-sm font-medium">
+                                            Selesai
+                                        </span>
+                                    @endif
+                                </div>
+                            </div>
+                        @endforeach
                     </div>
-                    <div class="ml-3">
-                        <p class="font-semibold">{{ Auth::user()->name }}</p>
-                        <p class="text-sm text-green-300">Siswa</p>
+                @else
+                    <div class="text-center py-12">
+                        <i class="fas fa-inbox text-gray-400 text-5xl mb-4"></i>
+                        <p class="text-gray-500">Belum ada peminjaman</p>
                     </div>
-                </div>
-                <form method="POST" action="{{ route('logout') }}" class="mt-4">
-                    @csrf
-                    <button type="submit"
-                        class="w-full px-4 py-2 bg-red-600 hover:bg-red-700 rounded-lg transition text-sm">
-                        <i class="fas fa-sign-out-alt mr-2"></i>Logout
-                    </button>
-                </form>
+                @endif
             </div>
-        </aside>
-
-        <!-- Main Content -->
-        <main class="flex-1 overflow-y-auto">
-            <!-- Header -->
-            <header class="bg-white shadow-sm">
-                <div class="px-8 py-4 flex justify-between items-center">
-                    <div>
-                        <h1 class="text-2xl font-bold text-gray-800">Dashboard Siswa</h1>
-                        <p class="text-gray-600">Selamat datang kembali, {{ Auth::user()->name }}! Lanjutkan belajar
-                            Anda.</p>
-                    </div>
-                    <div class="flex items-center space-x-4">
-                        {{-- <button class="relative p-2 text-gray-600 hover:bg-gray-100 rounded-full">
-                            <i class="fas fa-bell text-xl"></i>
-                            <span class="absolute top-0 right-0 w-2 h-2 bg-red-500 rounded-full"></span>
-                        </button> --}}
-                        <a href="#" class="px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition">
-                            <i class="fas fa-search mr-2"></i>Cari Kursus
-                        </a>
-                    </div>
-                </div>
-            </header>
-
-            <!-- Dashboard Content -->
-            <div class="p-8">
-                dashboard student
-            </div>
-        </main>
-    </div>
+        </div>
+    </main>
 </body>
 
 </html>

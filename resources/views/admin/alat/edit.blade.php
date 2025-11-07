@@ -104,7 +104,7 @@
                             <label for="gambar" class="block text-sm font-medium text-gray-700 mb-1">Ganti Gambar (Opsional)</label>
                             <div class="flex items-center space-x-4">
                                 @if($alat->gambar)
-                                    <img src="{{ Storage::url($alat->gambar) }}" alt="Gambar saat ini" class="w-20 h-20 rounded-lg object-cover">
+                                    <img src="{{ asset($alat->gambar) }}" alt="Gambar saat ini" class="w-20 h-20 rounded-lg object-cover">
                                 @else
                                     <div class="w-20 h-20 rounded-lg bg-gray-100 flex items-center justify-center text-gray-400">
                                         <i class="fas fa-image text-2xl"></i>

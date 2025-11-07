@@ -43,6 +43,10 @@ Route::middleware('auth')->group(function () {
     // Student Routes
     Route::middleware('role:student')->prefix('student')->name('student.')->group(function () {
         Route::get('/dashboard', [DashboardController::class, 'studentDashboard'])->name('dashboard');
+        Route::get('/peminjaman', [PeminjamanController::class, 'index'])->name('peminjaman');
+        Route::get('/peminjaman/create', [PeminjamanController::class, 'create'])->name('peminjaman.create');
+        Route::post('/peminjaman', [PeminjamanController::class, 'store'])->name('peminjaman.store');
+        Route::get('/alat', [AlatController::class, 'studentIndex'])->name('alat.index');
     });
 
     
