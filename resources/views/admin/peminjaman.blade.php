@@ -26,59 +26,55 @@
         <p class="text-gray-500 mb-6">Kelola dan setujui peminjaman alat laboratorium</p>
 
         <!-- Status Cards -->
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
-            <!-- Menunggu -->
-            <a href="{{ route('admin.peminjaman', ['status' => 'menunggu']) }}" 
-            class="bg-white p-5 rounded-lg shadow-sm flex items-center space-x-4 hover:shadow-md transition
-                    {{ request('status') == 'menunggu' ? 'ring-2 ring-yellow-400' : '' }}">
-                <div class="w-12 h-12 bg-yellow-100 rounded-lg flex items-center justify-center">
-                    <i class="fas fa-hourglass-half text-yellow-600 text-2xl"></i>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">               
+                <div class="bg-white rounded-xl shadow-sm p-6 card-hover">
+                    <div class="flex items-center">
+                        <div class="w-12 h-12 bg-yellow-100 rounded-lg flex items-center justify-center mr-4">
+                            <i class="fas fa-clock text-yellow-600 text-xl"></i>
+                        </div>
+                        <div>
+                            <p class="text-sm text-gray-600 mb-1">Menunggu</p>
+                            <p class="text-3xl font-bold text-gray-800">{{ $menunggu ?? 0 }}</p>
+                        </div>
+                    </div>
                 </div>
-                <div>
-                    <p class="text-gray-500 text-sm">Menunggu</p>
-                    <p class="text-2xl font-bold text-gray-900">{{ $menunggu ?? 0 }}</p>
+                
+                <div class="bg-white rounded-xl shadow-sm p-6 card-hover">
+                    <div class="flex items-center">
+                        <div class="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center mr-4">
+                            <i class="fas fa-check text-green-600 text-xl"></i>
+                        </div>
+                        <div>
+                            <p class="text-sm text-gray-600 mb-1">Disetujui</p>
+                            <p class="text-3xl font-bold text-gray-800">{{ $disetujui ?? 0 }}</p>
+                        </div>
+                    </div>
                 </div>
-            </a>
 
-            <!-- Disetujui -->
-            <a href="{{ route('admin.peminjaman', ['status' => 'disetujui']) }}" 
-            class="bg-white p-5 rounded-lg shadow-sm flex items-center space-x-4 hover:shadow-md transition
-                    {{ request('status') == 'disetujui' ? 'ring-2 ring-green-400' : '' }}">
-                <div class="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center">
-                    <i class="fas fa-check-circle text-green-600 text-2xl"></i>
+                <div class="bg-white rounded-xl shadow-sm p-6 card-hover">
+                    <div class="flex items-center">
+                        <div class="w-12 h-12 bg-red-100 rounded-lg flex items-center justify-center mr-4">
+                            <i class="fas fa-times text-red-600 text-xl"></i>
+                        </div>
+                        <div>
+                            <p class="text-sm text-gray-600 mb-1">Ditolak</p>
+                            <p class="text-3xl font-bold text-gray-800">{{ $ditolak ?? 0 }}</p>
+                        </div>
+                    </div>
                 </div>
-                <div>
-                    <p class="text-gray-500 text-sm">Disetujui</p>
-                    <p class="text-2xl font-bold text-gray-900">{{ $disetujui ?? 0 }}</p>
+                
+                <div class="bg-white rounded-xl shadow-sm p-6 card-hover">
+                    <div class="flex items-center">
+                        <div class="w-12 h-12 bg-purple-100 rounded-lg flex items-center justify-center mr-4">
+                            <i class="fas fa-clipboard-check text-purple-600 text-xl"></i>
+                        </div>
+                        <div>
+                            <p class="text-sm text-gray-600 mb-1">Selesai</p>
+                            <p class="text-3xl font-bold text-gray-800">{{ $selesai ?? 0 }}</p>
+                        </div>
+                    </div>
                 </div>
-            </a>
-
-            <!-- Selesai -->
-            <a href="{{ route('admin.peminjaman', ['status' => 'selesai']) }}" 
-            class="bg-white p-5 rounded-lg shadow-sm flex items-center space-x-4 hover:shadow-md transition
-                    {{ request('status') == 'selesai' ? 'ring-2 ring-blue-400' : '' }}">
-                <div class="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center">
-                    <i class="fas fa-clipboard-check text-blue-600 text-2xl"></i>
-                </div>
-                <div>
-                    <p class="text-gray-500 text-sm">Selesai</p>
-                    <p class="text-2xl font-bold text-gray-900">{{ $selesai ?? 0 }}</p>
-                </div>
-            </a>
-
-            <!-- Ditolak -->
-            <a href="{{ route('admin.peminjaman', ['status' => 'ditolak']) }}" 
-            class="bg-white p-5 rounded-lg shadow-sm flex items-center space-x-4 hover:shadow-md transition
-                    {{ request('status') == 'ditolak' ? 'ring-2 ring-red-400' : '' }}">
-                <div class="w-12 h-12 bg-red-100 rounded-lg flex items-center justify-center">
-                    <i class="fas fa-times-circle text-red-600 text-2xl"></i>
-                </div>
-                <div>
-                    <p class="text-gray-500 text-sm">Ditolak</p>
-                    <p class="text-2xl font-bold text-gray-900">{{ $ditolak ?? 0 }}</p>
-                </div>
-            </a>
-        </div>
+            </div>
 
 
 

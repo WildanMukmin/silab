@@ -36,66 +36,54 @@
                 </a>
             </div>
 
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-6 mb-8">
-                    <div class="bg-white rounded-xl shadow-sm p-6 card-hover">
-                        <div class="flex items-center">
-                            <div class="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center mr-4">
-                                <i class="fas fa-calendar text-blue-600 text-xl"></i>
-                            </div>
-                            <div>
-                                <p class="text-sm text-gray-600 mb-1">Total Peminjaman</p>
-                                <p class="text-3xl font-bold text-gray-800">{{ $totalPeminjaman ?? 0 }}</p>
-                            </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">               
+                <div class="bg-white rounded-xl shadow-sm p-6 card-hover">
+                    <div class="flex items-center">
+                        <div class="w-12 h-12 bg-yellow-100 rounded-lg flex items-center justify-center mr-4">
+                            <i class="fas fa-clock text-yellow-600 text-xl"></i>
+                        </div>
+                        <div>
+                            <p class="text-sm text-gray-600 mb-1">Menunggu</p>
+                            <p class="text-3xl font-bold text-gray-800">{{ $menunggu ?? 0 }}</p>
                         </div>
                     </div>
+                </div>
+                
+                <div class="bg-white rounded-xl shadow-sm p-6 card-hover">
+                    <div class="flex items-center">
+                        <div class="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center mr-4">
+                            <i class="fas fa-check text-green-600 text-xl"></i>
+                        </div>
+                        <div>
+                            <p class="text-sm text-gray-600 mb-1">Disetujui</p>
+                            <p class="text-3xl font-bold text-gray-800">{{ $disetujui ?? 0 }}</p>
+                        </div>
+                    </div>
+                </div>
 
-                    <div class="bg-white rounded-xl shadow-sm p-6 card-hover">
-                        <div class="flex items-center">
-                            <div class="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center mr-4">
-                                <i class="fas fa-check text-green-600 text-xl"></i>
-                            </div>
-                            <div>
-                                <p class="text-sm text-gray-600 mb-1">Disetujui</p>
-                                <p class="text-3xl font-bold text-gray-800">{{ $disetujui ?? 0 }}</p>
-                            </div>
+                <div class="bg-white rounded-xl shadow-sm p-6 card-hover">
+                    <div class="flex items-center">
+                        <div class="w-12 h-12 bg-red-100 rounded-lg flex items-center justify-center mr-4">
+                            <i class="fas fa-times text-red-600 text-xl"></i>
+                        </div>
+                        <div>
+                            <p class="text-sm text-gray-600 mb-1">Ditolak</p>
+                            <p class="text-3xl font-bold text-gray-800">{{ $ditolak ?? 0 }}</p>
                         </div>
                     </div>
-
-                    <div class="bg-white rounded-xl shadow-sm p-6 card-hover">
-                        <div class="flex items-center">
-                            <div class="w-12 h-12 bg-yellow-100 rounded-lg flex items-center justify-center mr-4">
-                                <i class="fas fa-clock text-yellow-600 text-xl"></i>
-                            </div>
-                            <div>
-                                <p class="text-sm text-gray-600 mb-1">Menunggu</p>
-                                <p class="text-3xl font-bold text-gray-800">{{ $menunggu ?? 0 }}</p>
-                            </div>
+                </div>
+                
+                <div class="bg-white rounded-xl shadow-sm p-6 card-hover">
+                    <div class="flex items-center">
+                        <div class="w-12 h-12 bg-purple-100 rounded-lg flex items-center justify-center mr-4">
+                            <i class="fas fa-clipboard-check text-purple-600 text-xl"></i>
+                        </div>
+                        <div>
+                            <p class="text-sm text-gray-600 mb-1">Selesai</p>
+                            <p class="text-3xl font-bold text-gray-800">{{ $selesai ?? 0 }}</p>
                         </div>
                     </div>
-
-                    <div class="bg-white rounded-xl shadow-sm p-6 card-hover">
-                        <div class="flex items-center">
-                            <div class="w-12 h-12 bg-red-100 rounded-lg flex items-center justify-center mr-4">
-                                <i class="fas fa-times text-red-600 text-xl"></i>
-                            </div>
-                            <div>
-                                <p class="text-sm text-gray-600 mb-1">Ditolak</p>
-                                <p class="text-3xl font-bold text-gray-800">{{ $ditolak ?? 0 }}</p>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div class="bg-white rounded-xl shadow-sm p-6 card-hover">
-                        <div class="flex items-center">
-                            <div class="w-12 h-12 bg-purple-100 rounded-lg flex items-center justify-center mr-4">
-                                <i class="fas fa-check text-purple-600 text-xl"></i>
-                            </div>
-                            <div>
-                                <p class="text-sm text-gray-600 mb-1">Selesai</p>
-                                <p class="text-3xl font-bold text-gray-800">{{ $selesai ?? 0 }}</p>
-                            </div>
-                        </div>
-                    </div>
+                </div>
             </div>
 
             <div class="mb-6 border-b border-gray-200">
