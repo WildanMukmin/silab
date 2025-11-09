@@ -18,7 +18,10 @@
                     Dashboard
                 </a>
                 <a href="{{ route('admin.peminjaman') }}" 
-                   class="font-medium text-gray-700 hover:text-blue-600 transition">
+                   class="font-medium transition 
+                          {{ request()->routeIs('admin.peminjaman') 
+                             ? 'text-blue-600 border-b-2 border-blue-600' 
+                             : 'text-gray-700 hover:text-blue-600' }}">
                     Peminjaman
                 </a>
                 <a href="{{ route('admin.alat.index') }}"
