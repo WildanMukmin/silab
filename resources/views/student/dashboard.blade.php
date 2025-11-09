@@ -32,7 +32,7 @@
             </div>
 
             <!-- Summary Cards Section -->
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-6 mb-8">
                     <!-- Total Peminjaman Card -->
                     <div class="bg-white rounded-xl shadow-sm p-6 card-hover">
                         <div class="flex items-center">
@@ -81,6 +81,18 @@
                             <div>
                                 <p class="text-sm text-gray-600 mb-1">Ditolak</p>
                                 <p class="text-3xl font-bold text-gray-800">{{ $ditolak ?? 0 }}</p>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Selesai Card -->
+                    <div class="bg-white rounded-xl shadow-sm p-6 card-hover">
+                        <div class="flex items-center">
+                            <div class="w-12 h-12 bg-purple-100 rounded-lg flex items-center justify-center mr-4">
+                                <i class="fas fa-check text-purple-600 text-xl"></i>
+                            </div>
+                            <div>
+                                <p class="text-sm text-gray-600 mb-1">Selesai</p>
+                                <p class="text-3xl font-bold text-gray-800">{{ $selesai ?? 0 }}</p>
                             </div>
                         </div>
                     </div>
