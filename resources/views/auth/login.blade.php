@@ -126,13 +126,6 @@
                 </p>
             </div>
 
-            <!-- Forgot Password Link -->
-            <div class="text-center mt-4">
-                <a href="#" class="text-sm text-gray-500 hover:text-gray-700">
-                    Lupa password?
-                </a>
-            </div>
-
             <!-- Back to Home -->
             <div class="text-center mt-6 pt-6 border-t border-gray-200">
                 <a href="{{ route('home') }}"
