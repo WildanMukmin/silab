@@ -26,43 +26,60 @@
         <p class="text-gray-500 mb-6">Kelola dan setujui peminjaman alat laboratorium</p>
 
         <!-- Status Cards -->
-        <div class="grid grid-cols-4 gap-4 mb-8">
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+            <!-- Menunggu -->
             <a href="{{ route('admin.peminjaman', ['status' => 'menunggu']) }}" 
-            class="bg-yellow-400 text-white rounded-xl p-4 flex justify-between items-center shadow-md {{ request('status') == 'menunggu' ? 'ring-4 ring-yellow-200' : '' }}">
-                <div>
-                    <p class="text-lg font-semibold">Menunggu</p>
-                    <h2 class="text-3xl font-bold">{{ $menunggu ?? 0 }}</h2>
+            class="bg-white p-5 rounded-lg shadow-sm flex items-center space-x-4 hover:shadow-md transition
+                    {{ request('status') == 'menunggu' ? 'ring-2 ring-yellow-400' : '' }}">
+                <div class="w-12 h-12 bg-yellow-100 rounded-lg flex items-center justify-center">
+                    <i class="fas fa-hourglass-half text-yellow-600 text-2xl"></i>
                 </div>
-                <i class="fas fa-hourglass-half text-3xl"></i>
+                <div>
+                    <p class="text-gray-500 text-sm">Menunggu</p>
+                    <p class="text-2xl font-bold text-gray-900">{{ $menunggu ?? 0 }}</p>
+                </div>
             </a>
 
+            <!-- Disetujui -->
             <a href="{{ route('admin.peminjaman', ['status' => 'disetujui']) }}" 
-            class="bg-green-500 text-white rounded-xl p-4 flex justify-between items-center shadow-md {{ request('status') == 'disetujui' ? 'ring-4 ring-green-200' : '' }}">
-                <div>
-                    <p class="text-lg font-semibold">Disetujui</p>
-                    <h2 class="text-3xl font-bold">{{ $disetujui ?? 0 }}</h2>
+            class="bg-white p-5 rounded-lg shadow-sm flex items-center space-x-4 hover:shadow-md transition
+                    {{ request('status') == 'disetujui' ? 'ring-2 ring-green-400' : '' }}">
+                <div class="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center">
+                    <i class="fas fa-check-circle text-green-600 text-2xl"></i>
                 </div>
-                <i class="fas fa-check-circle text-3xl"></i>
+                <div>
+                    <p class="text-gray-500 text-sm">Disetujui</p>
+                    <p class="text-2xl font-bold text-gray-900">{{ $disetujui ?? 0 }}</p>
+                </div>
             </a>
 
+            <!-- Selesai -->
             <a href="{{ route('admin.peminjaman', ['status' => 'selesai']) }}" 
-            class="bg-blue-500 text-white rounded-xl p-4 flex justify-between items-center shadow-md {{ request('status') == 'selesai' ? 'ring-4 ring-blue-200' : '' }}">
-                <div>
-                    <p class="text-lg font-semibold">Selesai</p>
-                    <h2 class="text-3xl font-bold">{{ $selesai ?? 0 }}</h2>
+            class="bg-white p-5 rounded-lg shadow-sm flex items-center space-x-4 hover:shadow-md transition
+                    {{ request('status') == 'selesai' ? 'ring-2 ring-blue-400' : '' }}">
+                <div class="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center">
+                    <i class="fas fa-clipboard-check text-blue-600 text-2xl"></i>
                 </div>
-                <i class="fas fa-check text-3xl"></i>
+                <div>
+                    <p class="text-gray-500 text-sm">Selesai</p>
+                    <p class="text-2xl font-bold text-gray-900">{{ $selesai ?? 0 }}</p>
+                </div>
             </a>
 
+            <!-- Ditolak -->
             <a href="{{ route('admin.peminjaman', ['status' => 'ditolak']) }}" 
-            class="bg-red-500 text-white rounded-xl p-4 flex justify-between items-center shadow-md {{ request('status') == 'ditolak' ? 'ring-4 ring-red-200' : '' }}">
-                <div>
-                    <p class="text-lg font-semibold">Ditolak</p>
-                    <h2 class="text-3xl font-bold">{{ $ditolak ?? 0 }}</h2>
+            class="bg-white p-5 rounded-lg shadow-sm flex items-center space-x-4 hover:shadow-md transition
+                    {{ request('status') == 'ditolak' ? 'ring-2 ring-red-400' : '' }}">
+                <div class="w-12 h-12 bg-red-100 rounded-lg flex items-center justify-center">
+                    <i class="fas fa-times-circle text-red-600 text-2xl"></i>
                 </div>
-                <i class="fas fa-times-circle text-3xl"></i>
+                <div>
+                    <p class="text-gray-500 text-sm">Ditolak</p>
+                    <p class="text-2xl font-bold text-gray-900">{{ $ditolak ?? 0 }}</p>
+                </div>
             </a>
         </div>
+
 
 
        <!-- Filter & Search -->
