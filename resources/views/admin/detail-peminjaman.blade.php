@@ -127,7 +127,7 @@
                         <option value="ditolak" @selected($peminjaman->status == 'ditolak')>Ditolak</option>
                     </select>
 
-                    <label class="block mb-2 text-sm font-medium text-gray-700">Alasan Penolakan (Opsional):</label>
+                    <label class="block mb-2 text-sm font-medium text-gray-700">Alasan Penolakan :</label>
                     <textarea name="alasan_penolakan" rows="3"
                               class="w-full border border-gray-300 rounded-lg p-2 focus:ring-2 focus:ring-yellow-400"
                               placeholder="Isi jika status ditolak...">{{ $peminjaman->alasan_penolakan }}</textarea>

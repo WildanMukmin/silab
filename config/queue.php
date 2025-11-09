@@ -75,18 +75,18 @@ return [
 
     /*
     |--------------------------------------------------------------------------
-    | Job Batching
+    | Job angkataning
     |--------------------------------------------------------------------------
     |
     | The following options configure the database and table that store job
-    | batching information. These options can be updated to any database
+    | angkataning information. These options can be updated to any database
     | connection and table which has been defined by your application.
     |
     */
 
-    'batching' => [
+    'angkataning' => [
         'database' => env('DB_CONNECTION', 'mysql'),
-        'table' => 'job_batches',
+        'table' => 'job_angkatanes',
     ],
 
     /*

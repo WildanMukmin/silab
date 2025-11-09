@@ -24,11 +24,11 @@ class RedirectIfAuthenticated
                 $role = Auth::user()->role;
 
                 if ($role === 'admin') {
-                    return redirect("/admin/dashboard");
+                    return redirect()->route('admin.dashboard');
                 } elseif ($role === 'student') {
-                    return redirect("/student/dashboard");
-                }else{
-                    return redirect(RouteServiceProvider::HOME);
+                    return redirect()->route('student.dashboard');
+                } else {
+                    return redirect()->route('home');
                 }
             }
         }

@@ -98,20 +98,24 @@ class PeminjamanController extends Controller
             'tujuan_penggunaan.max' => 'Tujuan penggunaan maksimal 255 karakter',
         ]);
 
-        $peminjaman = Peminjaman::create([
-            'user_id' => Auth::id(),
-            'alat_id' => $validated['alat_id'],
-            'tanggal_peminjaman' => $validated['tanggal_peminjaman'],
-            'waktu_mulai' => $validated['waktu_mulai'],
-            'waktu_selesai' => $validated['waktu_selesai'],
-            'tujuan_penggunaan' => $validated['tujuan_penggunaan'],
-            'catatan_tambahan' => $validated['catatan_tambahan'] ?? null,
-            'lokasi_peminjaman' => $validated['lokasi_peminjaman'] ?? null,
-            'status' => 'menunggu',
-        ]);
+        try {
+            $peminjaman = Peminjaman::create([
+                'user_id' => Auth::id(),
+                'alat_id' => $validated['alat_id'],
+                'tanggal_peminjaman' => $validated['tanggal_peminjaman'],
+                'waktu_mulai' => $validated['waktu_mulai'],
+                'waktu_selesai' => $validated['waktu_selesai'],
+                'tujuan_penggunaan' => $validated['tujuan_penggunaan'],
+                'catatan_tambahan' => $validated['catatan_tambahan'] ?? null,
+                'lokasi_peminjaman' => $validated['lokasi_peminjaman'] ?? null,
+                'status' => 'menunggu',
+            ]);
 
-        return redirect()->route('student.peminjaman')
-            ->with('success', 'Peminjaman berhasil diajukan. Menunggu persetujuan admin.');
+            return redirect()->route('student.peminjaman')
+                ->with('success', 'Peminjaman berhasil diajukan. Menunggu persetujuan admin.');
+        } catch (\Exception $e) {
+            return redirect()->back()->withInput()->with('error', 'Gagal mengajukan peminjaman: ' . $e->getMessage());
+        }
     }
 }
 

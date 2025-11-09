@@ -43,11 +43,26 @@ class AuthController extends Controller
 
         // Attempt login
         if (Auth::attempt($credentials, $remember)) {
+            $user = Auth::user();
+            
+            // Check if account is active
+            if (!$user->is_active) {
+                Auth::logout();
+                return back()->withErrors([
+                    'email' => 'Akun Anda nonaktif. Silakan hubungi admin No.WA 083813181318.'
+                ])->onlyInput('email');
+            }
+            
+            // Update last login timestamp
+            $user->update([
+                'last_login_at' => now()
+            ]);
+
             $request->session()->regenerate();
 
             // Redirect based on user role
             return $this->redirectBasedOnRole();
-        }
+        } 
 
         // Login failed
         return back()->withErrors([
@@ -78,6 +93,7 @@ class AuthController extends Controller
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'password' => ['required', 'confirmed', Password::min(8)],
+            'role' => ['sometimes', 'in:student'], // Only allow student registration
             'terms' => ['accepted'],
         ], [
             'name.required' => 'Nama lengkap wajib diisi',
@@ -88,11 +104,12 @@ class AuthController extends Controller
             'password.required' => 'Password wajib diisi',
             'password.confirmed' => 'Konfirmasi password tidak cocok',
             'password.min' => 'Password minimal 8 karakter',
+            'role.in' => 'Role tidak valid',
             'terms.accepted' => 'Anda harus menyetujui syarat dan ketentuan',
         ]);
 
-        // Tentukan role default jika tidak dikirim dari form
-        $role = $validated['role'] ?? 'student';
+        // Set role to student for all registrations
+        $role = 'student';
 
         // Buat user baru
         $user = User::create([
@@ -135,7 +152,14 @@ class AuthController extends Controller
 
         // Jika user tidak punya role atau belum login (edge case)
         if (!$user || !$user->role) {
-            return redirect()->route('home');
+            Auth::logout();
+            return redirect()->route('login')->with('error', 'Role tidak valid. Silakan hubungi administrator.');
+        }
+
+        // Validasi role
+        if (!in_array($user->role, ['admin', 'student'])) {
+            Auth::logout();
+            return redirect()->route('login')->with('error', 'Role tidak valid. Silakan hubungi administrator.');
         }
 
         switch ($user->role) {
@@ -144,7 +168,8 @@ class AuthController extends Controller
             case 'student':
                 return redirect()->route('student.dashboard');
             default:
-                return redirect()->route('home');
+                Auth::logout();
+                return redirect()->route('login')->with('error', 'Role tidak valid. Silakan hubungi administrator.');
         }
     }
-}
+ }

@@ -69,7 +69,7 @@
                     class="px-8 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition shadow-lg font-semibold">
                     Mulai Sekarang
                 </a>
-                <a href="#fitur"
+                <a href="/login"
                     class="px-8 py-3 bg-white text-gray-700 rounded-lg hover:bg-gray-50 transition shadow-md font-semibold">
                     Masuk ke Akun
                 </a>
@@ -96,7 +96,7 @@
                     </div>
                     <h3 class="text-xl font-bold text-gray-900 mb-3">Multi Role System</h3>
                     <p class="text-gray-600">
-                        Kelola akses berdasarkan peran mahasiswa, dosen, dan admin dengan pembagian tugas yang
+                        Kelola akses berdasarkan peran mahasiswa dan admin dengan pembagian tugas yang
                         terstruktur dan aman
                     </p>
                 </div>
