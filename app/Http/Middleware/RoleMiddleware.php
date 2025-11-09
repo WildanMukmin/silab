@@ -21,8 +21,10 @@ class RoleMiddleware
         }
 
         // Check if user has the required role
-        if (auth()->user()->role !== $role) {
-            abort(403, 'Anda tidak memiliki akses ke halaman ini.');
+        if (auth()->user()->role !== $role && auth()->user()->role === 'admin') {
+            return redirect()->route('admin.dashboard');
+        }else if (auth()->user()->role !== $role && auth()->user()->role === 'student') {
+            return redirect()->route('student.dashboard');
         }
 
         return $next($request);

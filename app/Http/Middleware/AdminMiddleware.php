@@ -19,8 +19,8 @@ class AdminMiddleware
             return redirect()->route('login')->with('error', 'Anda harus login terlebih dahulu.');
         }
 
-        if (auth()->user()->role !== 'admin') {
-            abort(403, 'Unauthorized. Hanya admin yang dapat mengakses halaman ini.');
+        if (auth()->user()->role !== 'admin' && auth()->user()->role === 'student') {
+            return redirect()->route('student.dashboard')->with('error', 'Anda harus login sebagai admin.'); 
         }
 
         return $next($request);
